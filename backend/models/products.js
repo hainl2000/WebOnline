@@ -2,13 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AccountModel = require('./user');
-
-mongoose.connect('mongodb://localhost/Web', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-});
+const MongoURL = process.env.MongoURL || 'mongodb://localhost/Web'
+try{
+    mongoose.connect(MongoURL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    },() =>{console.log('connected to database')}
+    )
+}catch(e){
+    console.log('connected to database fail')
+};
 
 const ProductSchema = new Schema({
     nameProduct : {

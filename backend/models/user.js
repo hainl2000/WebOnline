@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const ProductModel = require('../models/products');
 const Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/Web', {
+const MongoURL = process.env.MongoURL || 'mongodb://localhost/Web'
+
+mongoose.connect(MongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,

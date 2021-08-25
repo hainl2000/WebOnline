@@ -2,6 +2,7 @@ const ProductModel = require('../models/products');
 const AccountModel = require('../models/user');
 
 exports.addProduct = (req,res,next) =>{
+    console.log(process.env.MongoURL);
     var productName = req.body.productName;
     var imageURL = req.body.imageURL;
     var quantity = req.body.quantity;
