@@ -2,15 +2,6 @@ const mongoose = require('mongoose');
 const ProductModel = require('../models/products');
 const Schema = mongoose.Schema;
 
-const MongoURL = process.env.MongoURL || 'mongodb://localhost/Web'
-
-mongoose.connect(MongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true
-});
-
 const AccountSchema = new Schema({
     username: {
         type: String,
@@ -84,15 +75,15 @@ AccountSchema.methods.addToCart = async function(productId) {
 };
 
 AccountSchema.methods.removeFromCart = function(productId) {
-    console.log('product Id la ' + productId);
+    // console.log('product Id la ' + productId);
     ProductModel.findOne({
         _id : productId
     }).then(product =>{
-        console.log('product la null ' + product);
+        // console.log('product la ' + product);
         const cart = this.cart;
         const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(productId).trim());
         if (isExisting >= 0) {
-            console.log('so luong la ' + isExisting);
+            // console.log('so luong la ' + isExisting);
             cart.totalPrice -= product.price * cart.items[isExisting].qty;
             cart.items.splice(isExisting, 1);
             return this.save();
@@ -101,6 +92,8 @@ AccountSchema.methods.removeFromCart = function(productId) {
         console.log(err);
     })
 };
+
+
 
 
 const AccountModel = mongoose.model('Account', AccountSchema);

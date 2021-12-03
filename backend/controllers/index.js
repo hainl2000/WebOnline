@@ -1,7 +1,6 @@
 const AccountModel = require('../models/user');
 
-exports.postLoginForm = (req,res,next) =>{
-    console.log('12312312');
+exports.postLoginForm = (req,res) =>{
     console.log(req.body);
     var username = req.body.username;
     var password = req.body.password;
@@ -10,20 +9,19 @@ exports.postLoginForm = (req,res,next) =>{
         username: username,
         password: password
     }).then(data => {
-        if (data.length != 0) {
+        if (data) {
             console.log(data);
-            console.log(data._id);
-            // res.cookie('userId',data._id);
-            res.cookie('userId','123456');
+            res.cookie('userId',data._id);
             // var token = jwt.sign({ id: data._id, username: data.username, role: data.role }, 'haidat');
             res.send({
                 message: 'Login Succesfully',
                 status: 1,
-                role : 0
+                role : data.role
                 // data: data
                     // token: token
             })
-        } else {
+        } 
+        else {
             console.log("Not existed user");
             res.send({
                 message: "Not existed user",
@@ -31,11 +29,15 @@ exports.postLoginForm = (req,res,next) =>{
             });
         }
     }).catch(error => {
-        res.status(500).json('Error while Login');
+        console.log(error);
+        res.send({
+            message: "Error",
+            status: 0
+        });
     })
 }
 
-exports.postRegisterForm = (req,res,next) =>{
+exports.postRegisterForm = (req,res) =>{
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
@@ -57,7 +59,7 @@ exports.postRegisterForm = (req,res,next) =>{
                 role: 1,
             });
             res.send({
-                message : "Not existed user",
+                message : "Register Succesfully",
                 status : 1
             })
         }
