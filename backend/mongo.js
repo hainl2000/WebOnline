@@ -1,7 +1,8 @@
 require("dotenv").config();
 const  mongoose  =  require('mongoose');
 
-const uri = 'mongodb://localhost:27017/Web' || process.env.MongoURL ;
+const uri = process.env.MongoURL || 'mongodb://localhost:8000';
+// const uri = process.env.MongoURL || 'mongodb://localhost:27017/Web';
 // mongoose.set('bufferCommands', false);
 
 module.exports = async() =>{
