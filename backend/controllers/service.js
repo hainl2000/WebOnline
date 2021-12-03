@@ -19,16 +19,17 @@ exports.addToCart = (req, res) => {
 
 exports.removeFromCart = (req,res) =>{
     AccountModel.findOne({
-        _id : req.cookies.userId
-        // username : req.body.username
+        // _id : req.cookies.userId
+        _id : req.body.userId
     },function(err,user){
         if(err) {console.log(err)}
         else{  
             // console.log('zo');
-            user.removeFromCart(req.body.productId)
-            .then(() => {
-               res.json('remove succesfully'); // console.log('add successfully');
-            }).catch(err => console.log(err));
+            user.removeFromCart(req.body.productId);
+            res.json('remove succesfully');
+            // .then(() => {
+            //    res.json('remove succesfully'); // console.log('add successfully');
+            // }).catch(err => console.log(err));
         }
     })
 };
