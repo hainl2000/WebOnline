@@ -1,101 +1,55 @@
 const mongoose = require('mongoose');
-const ProductModel = require('../models/products');
+const ProductModel = require('./product');
 const Schema = mongoose.Schema;
 
 const AccountSchema = new Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        match : /^[a-zA-Z\-]+$/
     },
     password: {
         type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        // default: 'admin@gmail.com',
         required: true
     },
     role: {
         type: Number,
         // default: 1
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    },
     cart: {
-       items: [{
+        items: [{
+            _id : false,
            productId: {
                type: mongoose.Types.ObjectId,
-               ref: 'Products',
+               ref: 'Product',
                required : true
            },
-           qty: {
+           quantity: {
                type :Number,
                required: true
            }
-       }],
-       totalPrice :Number
-    },
-    boughtProduct: {
-        items: [{
-            productId: {
-                type: mongoose.Types.ObjectId,
-                ref: 'Products',
-                required : true
-            },
-            qty: {
-                type :Number,
-                required: true
-            }
         }],
-        totalPrice :Number
     }
+    // listOrder: [{
+    //     _id : false,
+    //     orderID:{
+    //         type: mongoose.Types.ObjectId,
+    //         ref: 'Order',
+    //         required: true
+    //     }
+    // }]
 }, {
-    collection: 'Users',
+    collection: 'User',
     versionKey: false
 });
 
-
-AccountSchema.methods.addToCart = async function(productId) {
-    const product = await ProductModel.findById(productId);
-    console.log(product);
-    if (product) {
-        const cart = this.cart;
-        console.log(cart);
-        const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim());
-        if (isExisting >= 0) {
-            cart.items[isExisting].qty += 1;
-        } else {
-            cart.items.push({ productId: product._id, qty: 1 });
-        }
-        if (!cart.totalPrice) {
-            cart.totalPrice = 0;
-        }
-        cart.totalPrice += product.price;
-        return this.save();
-    }
-};
-
-AccountSchema.methods.removeFromCart = function(productId) {
-    // console.log('product Id la ' + productId);
-    ProductModel.findOne({
-        _id : productId
-    }).then(product =>{
-        // console.log('product la ' + product);
-        const cart = this.cart;
-        const isExisting = cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(productId).trim());
-        if (isExisting >= 0) {
-            // console.log('so luong la ' + isExisting);
-            cart.totalPrice -= product.price * cart.items[isExisting].qty;
-            cart.items.splice(isExisting, 1);
-            return this.save();
-        }
-    }).catch(err =>{
-        console.log(err);
-    })
-};
-
-
-
-
-const AccountModel = mongoose.model('Account', AccountSchema);
+const AccountModel = mongoose.model('User', AccountSchema);
 
 module.exports = AccountModel;
