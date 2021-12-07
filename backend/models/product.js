@@ -8,20 +8,31 @@ const ProductSchema = new Schema({
     },
     imageURL: {
         type : String,
-        required:true
+        required: true
     },
     quantity: {
         type: Number,
         required : true
     },
+    category: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Category',
+        required:true
+    },
     price: {
-        type: Number
+        type: Number,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
+    },
+    deleted: {
+        type: Boolean,
+        default:false
     }
 },{
-    collection: 'Products',
+    collection: 'Product',
     versionKey: false
 });
 

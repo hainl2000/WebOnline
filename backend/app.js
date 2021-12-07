@@ -8,7 +8,7 @@ var cors = require('cors');
 var app = express();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 
 
@@ -19,8 +19,10 @@ mongo();
 
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+// app.engine('html', require('jade').renderFile);
+// app.set('view engine', 'html');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -41,7 +43,7 @@ app.use(cors(corsConfig));
 
 //
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', usersRouter);
 app.use('/admin', adminRouter);
 // app.use('/supporter');
 
