@@ -1,24 +1,36 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import ProductTag from '../Components/ProductTag';
 import SearchBar from '../Components/SearchBar';
 import User from '../Components/User';
-// import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
+import { Provider } from 'react-redux';
+import { CommonReducer } from '../Reducer/CommonReducer';
+import { applyMiddleware, compose } from 'redux';
+import ProductTags from './ProductsTag';
 
-const items = [{id: 1, name: 'iPhone X'}, {id: 2, name: 'iPhone 3'}, {id: 3, name: 'iPhone X Pro'}, {id: 4, name: 'iPhone XS'}]
 const useStyles = makeStyles(theme => ({
     nav: {
         background: '#F9A272',
+        height: '150px'
     },
     tagList: {
         display: 'flex',
     },
-    searchBar: {
+    upperNavBar: {
         paddingLeft: '20px',
         paddingTop: '20px'
+    },
+    searchBar: {
+        display: 'flex',
+    },
+    btn: {
+        height: '50px',
     }
 }))
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
 const NavBar = () => {
     const classes = useStyles()
+
     return (
         <div className={classes.nav}>
             <Grid container direction="row" alignItems="center" spacing={2}>
@@ -26,18 +38,20 @@ const NavBar = () => {
                     <div>BAC</div>
                 </Grid>
                 <Grid container item xs={10} direction="column">
-                    <Grid className={classes.searchBar} container item xs={10}>
+                    <Grid className={classes.upperNavBar} container item xs={10}>
                         <Grid item xs={9}>
                             <SearchBar placeholder="Tìm sản phẩm, thương hiệu mong muốn..."/>
                         </Grid>
                         <Grid item container xs={3}>
-                            <User />
+                            {/* <Provider store={store}> */}
+                                <User />
+                            {/* </Provider> */}
                         </Grid>
                     </Grid>
                     <Grid item xs={2} className={classes.tagList}>
-                        {items.map(item => (
-                            <ProductTag key={item.id} item={item}/>
-                        ))}
+                        {/* <Provider store={store}> */}
+                            <ProductTags />
+                        {/* </Provider> */}
                     </Grid>
                 </Grid>
             </Grid>

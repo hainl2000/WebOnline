@@ -1,5 +1,9 @@
 import { Chip, makeStyles } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { commonConstances as ACTIONS } from '../Action/ActionConstance';
+import { ProductByIdSelector } from "../Selector/CommonSelector";
+import { useEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
     tag: {
@@ -15,15 +19,19 @@ const useStyles = makeStyles(theme => ({
 const ProductTag = ({item}) => {
     const classes = useStyles()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const product = useSelector(ProductByIdSelector)
 
     return (
         <Chip
-        className={classes.tag}
-        key={item.id}
-        variant="outlined"
-        size="small"
-        label={item.name}
-        onClick={() => navigate(`/product/${item.id}`)}
+            className={classes.tag}
+            key={item.id}
+            variant="outlined"
+            size="small"
+            label={item.name}
+            onClick={() => {
+                navigate(`/product/${item.id}`)
+            }}
         />
     )
 }
