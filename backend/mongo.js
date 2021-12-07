@@ -2,7 +2,7 @@ require("dotenv").config();
 const  mongoose  =  require('mongoose');
 
 // const uri = process.env.MongoURL || 'mongodb://localhost:8000' ;
-const uri = 'mongodb://localhost:27017/shopping_app' || process.env.MongoURL ;
+const uri = process.env.MongoURL || 'mongodb://localhost:27017/shopping_app';
 // mongoose.set('bufferCommands', false);
 
 module.exports = async() =>{
