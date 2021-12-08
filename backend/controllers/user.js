@@ -61,12 +61,12 @@ const checkoutCart = async function(req,res,next){
             DBproduct.save();
         });
         user.save();
-        res.status(200).json({
+        return res.status(200).json({
             message: "Buy Successfully"
         });
     }
     else{
-        res.status(203).json({
+        return res.status(401).json({
             message: "Buy Fail",
             listExceedQuantityProducts : listExceedQuantityProducts,
             listDeletedProducts : listDeletedProducts 
