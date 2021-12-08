@@ -51,7 +51,7 @@ const authorizeUser = (req,res,next) =>{
             }
             else{
                 // console.log("Stop o day 1");
-                res.status(403).send({
+                return res.status(403).send({
                     message: "Not login = user account"
                 })
             }

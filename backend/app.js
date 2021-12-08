@@ -8,7 +8,7 @@ var cors = require('cors');
 var app = express();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/user');
+var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var authorizationMiddleware = require('./validate/authorizationAccount');
 
@@ -44,7 +44,7 @@ app.use(cors(corsConfig));
 
 //
 app.use('/', indexRouter);
-app.use('/user', authorizationMiddleware.authorizeUser,usersRouter);
+app.use('/user', authorizationMiddleware.authorizeUser,userRouter);
 app.use('/admin', authorizationMiddleware.authorizeAdmin,adminRouter);
 // app.use('/supporter');
 
