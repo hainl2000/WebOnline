@@ -107,10 +107,8 @@ export function GetProductsByCategory(id)
     console.log(id)
     return (dispatch) =>
     {
-        return axios.get('http://localhost:8000/getListProductsByCategory', {
-            data: {
-                category: id
-            }
+        return axios.post('http://localhost:8000/getListProductsByCategory', {
+            category: id
         }).then(response => {
             console.log(response.data)
             dispatch({

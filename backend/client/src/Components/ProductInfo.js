@@ -81,7 +81,7 @@ const ProductInfo = ({ id }) => {
                     <Grid className={classes.image} container spacing={0} xs>
                         <Grid item direction="column" xs={6}>
                             {/* <Skeleton variant="rect" height={250} width={250} /> */}
-                            <img src={product.imageURL} width={250} height={250} alt={product.nameProduct} />
+                            <img src={product?.imageURL} width={250} height={250} alt={product?.nameProduct} />
                         </Grid>
                         <Grid item direction="column" xs={4} className={classes.vertial}>
                             <Skeleton variant="rect" height={120} width={120} style={{marginBottom: '10px'}} />
