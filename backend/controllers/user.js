@@ -74,7 +74,27 @@ const checkoutCart = async function(req,res,next){
     }
 }
 
+const getUserInformation = (req,res,next) =>{
+    AccountModel.findOne({
+        _id: req.userId
+    }).then(data =>{
+        const userInformation = jwt.sign({
+            userInformation : data
+        },process.env.JWT_KEY);
+        return res.status(200).send({
+            dataUser : userInformation,
+            message: "getUserInformation succesfully"
+        })
+    }).catch(error => {
+        console.log(error);
+        return res.status(500).json({
+            message: "Error",
+        });
+    })
+}
+
 module.exports = {
-    checkoutCart
+    checkoutCart,
+    getUserInformation
 };
 
