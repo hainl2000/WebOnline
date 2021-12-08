@@ -2,7 +2,7 @@ const ProductModel = require('../models/product');
 // var cookieParser = require('cookie-parser');
 
 const getAllActiveProducts = (req,res,next) =>{
-    console.log('go to getAllProduct');
+    // console.log('go to getAllProduct');
     let restrictedFields ={
         deleted : false
     }
