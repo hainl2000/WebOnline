@@ -11,7 +11,9 @@ const getProductById = state => {
     return state.selectedId
 }
 const getUser = state => state.user
-const getLoginStatus = state => state.login
+const getAllCategories = state => state.category
+const getProductByCate = state => state.product_by_cate
+const getAuthenStatus = state => state.login
 
 export const LoginModalSelector = createSelector(
     getLoginModal,
@@ -53,8 +55,22 @@ export const ProductByIdSelector = createSelector(
     product => product
 )
 
-// export const LoginInfoSelector = createSelector(
-//     getUser,
-//     getLoginStatus,
-//     (user, info) => {user}
-// )
+export const AllCategorySelector = createSelector(
+    getAllCategories,
+    categories => categories
+)
+
+export const ProductByCategory = createSelector(
+    getProductByCate,
+    products => products
+)
+
+export const UserSelector = createSelector(
+    getUser,
+    user => user
+)
+
+export const AuthenStatusSelector = createSelector(
+    getAuthenStatus,
+    status => status
+)

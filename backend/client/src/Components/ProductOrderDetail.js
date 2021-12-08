@@ -58,25 +58,26 @@ const ProductOrderDetail = ({c_item}) => {
             <Grid container spacing={0}>
                 <Grid item direction="column" xs={5}>
                     <Container>
-                        <h1>{c_item?.name}</h1>
+                        <h1>{c_item?.nameProduct}</h1>
                         <h3>Mô tả:</h3>
                         <FormControl fullWidth>
-                            <TextField variant="outlined" multiline rows={15} disabled value="abc"/>
+                            <TextField variant="outlined" multiline rows={15} disabled value={c_item.description}/>
                         </FormControl>
                     </Container>
                 </Grid>
                 <Grid item direction="column" xs={7}>
                     <Container>
-                        <Skeleton className={classes.image} variant="rect" width={215} height={215}/>
+                        {/* <Skeleton className={classes.image} variant="rect" width={215} height={215}/> */}
+                        <img src={c_item.imageURL} width={215} height={215} alt={c_item.nameProduct} />
                         <Grid container>
                             <Grid item xs={12}>
-                                <p className={classes.detail}>Đơn giá: {Intl.NumberFormat().format(c_item?.price)} VND</p>
+                                <p className={classes.detail}>Đơn giá: {Intl.NumberFormat().format(c_item?.price)}$</p>
                             </Grid>
                             <Grid className={classes.quantity} item xs={6}>
                                 <p>Số lượng:</p>{<AddBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: 1}))}/>}<p>{quantity}</p>{<IndeterminateCheckBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: -1}))} />}
                             </Grid>
                             <Grid item xs={6}>
-                                <p className={classes.total}>{Intl.NumberFormat().format(c_item?.price * c_item?.quantity)}</p>
+                                <p className={classes.total}>{Intl.NumberFormat().format(c_item?.price * c_item?.quantity)}$</p>
                             </Grid>
                             <Grid item xs={12}>
                                 <FormControl fullWidth>

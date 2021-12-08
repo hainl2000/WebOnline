@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const ProductGallery = () => {
+const ProductGallery = ({items = []}) => {
     const classes = useStyles()
 
     return (
@@ -44,7 +44,7 @@ const ProductGallery = () => {
                 <Filter />
             </Container>
             <Container maxWidth="lg" className={classes.list}>
-                <ProductList />
+                <ProductList items={items}/>
             </Container>
         </>
     )

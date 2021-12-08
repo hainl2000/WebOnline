@@ -27,12 +27,13 @@ const CartItem = ({item}) => {
         <Paper className={classes.paper} onClick={() => dispatch(ToggleCartItemModal({type: ACTIONS.TOGGLE_CART_ITEM_MODAL, value: item}))}>
             <Grid container spacing={3}>
                 <Grid item direction="column">
-                    <Skeleton variant="rect" width={110} height={110}/>
+                    {/* <Skeleton variant="rect" width={110} height={110}/> */}
+                    <img src={item.imageURL} width={110} height={110} alt={item.nameProduct} />
                 </Grid>
                 <Grid className={classes.info} item direction="column">
                     <p>{item.name}</p>
                     <p>Số lượng: {item.quantity}</p>
-                    <p>Tổng: {Intl.NumberFormat().format(item.quantity * item.price)} VND</p>
+                    <p>Tổng: {Intl.NumberFormat().format(item.quantity * item.price)}$</p>
                 </Grid>
             </Grid>
         </Paper>

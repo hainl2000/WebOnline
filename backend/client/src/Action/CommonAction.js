@@ -1,4 +1,5 @@
-import { commonConstances as ACTIONS } from "./ActionConstance"
+import { commonConstances as ACTIONS } from "./ActionConstance";
+import axios from 'axios';
 
 export function ToggleLoginModal({type, value} = {})
 {
@@ -34,7 +35,6 @@ export function ChoosePaymentMethod({type, value} = {})
 
 export function UpdateQuantity({type, value} = {})
 {
-    console.log(value)
     return {
         type: type,
         value: value
@@ -70,27 +70,53 @@ export function AddIntoCart(value)
 
 export function DiscardFromCart(value)
 {
-    console.log(value)
     return {
         type: ACTIONS.DISCARD_ITEM,
         value: value
     }
 }
 
-export function Login(value)
+export function GetAllProducts()
 {
-    return (dispatch) => {
-        dispatch({type: ACTIONS.LOGIN_BEGIN, value: value})
-        return {
-            type: ACTIONS.LOGIN_SUCCESS,
-            value: true
-        }
+    return (dispatch) =>
+    {
+        return axios.get('http://localhost:8000/getAllActiveProducts').then(response => {
+            dispatch({
+                type: ACTIONS.GET_ALL_PRODUCTS,
+                value: response.data.listActiveProducts
+            })
+        })
     }
 }
 
-export function Logout()
+export function GetAllCategories()
 {
-    return {
-        type: ACTIONS.LOG_OUT
+    return (dispatch) =>
+    {
+        return axios.get('http://localhost:8000/getListCategories').then(response => {
+            dispatch({
+                type: ACTIONS.GET_ALL_CATEGORIES,
+                value: response.data.listCategories
+            })
+        })
+    }
+}
+
+export function GetProductsByCategory(id)
+{
+    console.log(id)
+    return (dispatch) =>
+    {
+        return axios.get('http://localhost:8000/getListProductsByCategory', {
+            data: {
+                category: id
+            }
+        }).then(response => {
+            console.log(response.data)
+            dispatch({
+                type: ACTIONS.GET_PRODUCT_BY_CATEGORY,
+                value: response.data.listCategories
+            })
+        })
     }
 }

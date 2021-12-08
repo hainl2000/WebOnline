@@ -28,9 +28,9 @@ const ProductTag = ({item}) => {
             key={item.id}
             variant="outlined"
             size="small"
-            label={item.name}
+            label={item.nameCategory}
             onClick={() => {
-                navigate(`/product/${item.id}`)
+                navigate(`/category/${item._id}`)
             }}
         />
     )

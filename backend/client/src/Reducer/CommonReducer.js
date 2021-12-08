@@ -13,32 +13,12 @@ const CommonState = new Record({
         price: null,
         quantity: 0
     },
-    selectedId: 1,
+    selectedId: null,
     selectedPaymentMethod: 1,
     cart: [],
-    products: [
-        {
-            id: 1,
-            name: 'iPhone X',
-            price: 20000000,
-            descript: 'Blah Blah',
-            image: "blah blah"
-        },
-        {
-            id: 2,
-            name: 'iPhone 8',
-            price: 10000000,
-            descript: 'Blah Blah',
-            image: "blah blah"
-        },
-        {
-            id: 3,
-            name: 'Samsung Fold',
-            price: 24000000,
-            descript: 'Blah Blah',
-            image: "blah blah"
-        },
-    ]
+    products: [],
+    category: [],
+    product_by_cate: []
 })
 
 const intialState = new CommonState()
@@ -78,8 +58,11 @@ export const CommonReducer = (state = intialState, action) => {
         
         case ACTIONS.SELECT_PRODUCT:
             {
+                console.log(action.value)
                 const p = state.get('products')
-                const selected = p.find(_p => _p.id == action.value)
+                console.log(p)
+                const selected = p.find(_p => _p._id === action.value)
+                console.log(selected)
                 return state.withMutations(s => s.set('selectedId', selected))
             }
 
@@ -87,7 +70,7 @@ export const CommonReducer = (state = intialState, action) => {
             {
                 const p = state.get('cart')
                 console.log(p, action.value)
-                const _p = p.find(_p_ => _p_.id == action.value.id)
+                const _p = p.find(_p_ => _p_._id === action.value.id)
                 if(_p)
                 {
                     _p.quantity += 1
@@ -118,15 +101,45 @@ export const CommonReducer = (state = intialState, action) => {
             {
                 if(action.value)
                 {
-                    return state.withMutations(s => s.set('login', true))
+                    return state.withMutations(s => s.set('login', true).set('loginModal', false))
                 }else{
-                    return state.withMutations(s => s.set('user', null))
+                    return state.withMutations(s => s.set('user', null).set('loginModal', false))
+                }
+            }
+
+        case ACTIONS.SIGN_UP_BEGIN:
+            {
+                return state.withMutations(s => s.set('user', action.value))
+            }
+
+        case ACTIONS.SIGN_UP_SUCCESS:
+            {
+                if(action.value)
+                {
+                    return state.withMutations(s => s.set('login', true).set('signinModal', false))
+                }else{
+                    return state.withMutations(s => s.set('user', null).set('signinModal', false))
                 }
             }
 
         case ACTIONS.LOG_OUT:
             {
                 return state.withMutations(s => s.set('login', false).set('user', null))
+            }
+
+        case ACTIONS.GET_ALL_PRODUCTS:
+            {
+                return state.withMutations(s => s.set('products', action.value))
+            }
+
+        case ACTIONS.GET_ALL_CATEGORIES:
+            {
+                return state.withMutations(s => s.set('category', action.value))
+            }
+
+        case ACTIONS.GET_PRODUCT_BY_CATEGORY:
+            {
+                return state.withMutations(s => s.set('product_by_cate', action.value))
             }
 
         default:

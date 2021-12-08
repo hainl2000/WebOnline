@@ -3,8 +3,11 @@ import PersonIcon from '@material-ui/icons/Person';
 import LockIcon from '@material-ui/icons/Lock';
 import { useDispatch } from "react-redux";
 import { commonConstances as ACTIONS } from "../Action/ActionConstance";
-import { ToggleLoginModal, ToggleSigninModal, Login } from '../Action/CommonAction';
+import { ToggleLoginModal, ToggleSigninModal } from '../Action/CommonAction';
+import { Login } from '../Action/AuthenticationAction';
 import { useState } from "react";
+import { AuthenStatusSelector, UserSelector } from "../Selector/CommonSelector";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     modal_content: {
@@ -55,6 +58,8 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const login = useSelector(AuthenStatusSelector)
+    const currentUser = useSelector(UserSelector)
 
     return (
         <Paper className={classes.modal_content}>
@@ -77,6 +82,7 @@ const LoginForm = () => {
                 />
                 <TextField
                     className={classes.textfield}
+                    error={!login && (currentUser !== null)}
                     variant="outlined"
                     value={password}
                     type="password"

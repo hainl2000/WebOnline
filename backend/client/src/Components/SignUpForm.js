@@ -1,7 +1,9 @@
 import { Paper, makeStyles, TextField, FormControl, Button } from "@material-ui/core";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { commonConstances as ACTIONS } from "../Action/ActionConstance";
 import { ToggleSigninModal } from '../Action/CommonAction';
+import { Signin } from "../Action/AuthenticationAction";
 
 const useStyles = makeStyles(theme => ({
     modal_content: {
@@ -50,6 +52,9 @@ const cancelHandle = (dispatch) => {
 const LoginForm = () => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     return (
         <Paper className={classes.modal_content}>
@@ -60,24 +65,29 @@ const LoginForm = () => {
                     variant="outlined"
                     label="tên đăng nhập"
                     autoComplete={false}
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <TextField
+                    className={classes.textfield}
+                    variant="outlined"
+                    label="email"
+                    value={email}
+                    autoComplete={false}
+                    onChange={e => setEmail(e.target.value)}
                 />
                 <TextField
                     className={classes.textfield}
                     variant="outlined"
                     type="password"
+                    value={password}
                     label="mật khẩu"
                     autoComplete={false}
-                />
-                <TextField
-                    className={classes.textfield}
-                    variant="outlined"
-                    type="password"
-                    label="xác nhận mật khẩu"
-                    autoComplete={false}
+                    onChange={e => setPassword(e.target.value)}
                 />
             </FormControl>
             <Button className={classes.btn} color="secondary" variant="contained" onClick={() => cancelHandle(dispatch)}>Hủy</Button>
-            <Button className={classes.btn} color="primary" variant="contained">Tạo tài khoản</Button>
+            <Button className={classes.btn} color="primary" variant="contained" onClick={() => dispatch(Signin({username: username, email: email, password: password}))}>Tạo tài khoản</Button>
             <div className={classes.question}>
                 <span onClick={() => dispatch(ToggleSigninModal({type: ACTIONS.TOGGLE_SIGNIN_MODAL, value: false}))}>Chưa có tài khoản?</span>
             </div>

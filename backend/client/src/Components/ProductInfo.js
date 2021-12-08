@@ -64,23 +64,24 @@ const ProductInfo = ({ id }) => {
         <Paper className={classes.container}>
             <Grid className={classes.root} container spacing={2}>
                 <Grid item xs={6}>
-                    <h1>{product?.name}</h1>
+                    <h1>{product?.nameProduct}</h1>
                     <Grid className={classes.leftCol} container>
                         <Grid item xs={6}>
                             <p style={{fontSize: 'x-large'}}>Mô tả</p>
                         </Grid>
                         <Grid item xs={6}>
-                            <p style={{fontSize: 'x-large'}}>{product?.price} VND</p>
+                            <p style={{fontSize: 'x-large'}}>{product?.price}$</p>
                         </Grid>
                     </Grid>
                     <FormControl fullWidth>
-                        <TextField variant="outlined" multiline rows={14} value={product?.descript} disabled/>
+                        <TextField variant="outlined" multiline rows={14} value={product?.description} disabled/>
                     </FormControl>
                 </Grid>
                 <Grid item xs={6}>
                     <Grid className={classes.image} container spacing={0} xs>
                         <Grid item direction="column" xs={6}>
-                            <Skeleton variant="rect" height={250} width={250} />
+                            {/* <Skeleton variant="rect" height={250} width={250} /> */}
+                            <img src={product.imageURL} width={250} height={250} alt={product.nameProduct} />
                         </Grid>
                         <Grid item direction="column" xs={4} className={classes.vertial}>
                             <Skeleton variant="rect" height={120} width={120} style={{marginBottom: '10px'}} />

@@ -1,14 +1,15 @@
 import ProductTag from "./ProductTag";
-import { ProductsSelector } from '../Selector/CommonSelector';
+import { AllCategorySelector } from '../Selector/CommonSelector';
 import { useSelector } from 'react-redux';
 
 const ProductTags = () => {
-    const items = useSelector(ProductsSelector)
+    const items = useSelector(AllCategorySelector)
+    console.log(items)
 
     return (
         <>
             {items.map(item => (
-                <ProductTag key={item.id} item={item}/>
+                <ProductTag key={item._id} item={item}/>
             ))}
         </>
     )

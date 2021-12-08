@@ -1,5 +1,5 @@
 import { makeStyles, Paper } from "@material-ui/core";
-import { Skeleton } from '@material-ui/lab';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     product: {
@@ -7,26 +7,35 @@ const useStyles = makeStyles(theme => ({
         border: '1px solid #AAAAAA'
     },
     product_image: {
-        marginBottom: '1em'
+        marginBottom: '0.5em'
     },
     product_title: {
         marginLeft: '1em',
-        marginBottom: '1em',
+        marginTop: 0,
         borderRadius: '5px',
     }
 }))
 
-const ProductList = () => {
+const ProductList = ({items}) => {
     const classes = useStyles()
+    const navigate = useNavigate()
 
     return (
         <>
-            {[1,2,3,4,5,6,7,8,9,10].map(id => {
+            {items.map(item => {
                 return (
-                    <Paper key={id} className={classes.product} variant="elevation" elevation={3}>
-                        <Skeleton variant="rect" width={200} height={200} className={classes.product_image}/>
-                        <Skeleton variant="h3" width="60%" className={classes.product_title}/>
-                        <Skeleton variant="h3" width="50%" className={classes.product_title}/>
+                    <Paper
+                        key={item._id}
+                        className={classes.product}
+                        variant="elevation"
+                        elevation={3}
+                        onClick={() => {
+                            navigate(`/product/${item._id}`)
+                        }}
+                    >
+                        <img src={item.imageURL} alt={item.nameProduct} width={200} height={200} />
+                        <h3 className={classes.product_title}>{item.nameProduct}</h3>
+                        <h3 className={classes.product_title}>{item.price}$</h3>
                     </Paper>
                 )
             })}

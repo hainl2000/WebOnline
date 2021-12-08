@@ -1,13 +1,20 @@
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import { Grid, makeStyles, Modal, Backdrop, Badge } from '@material-ui/core';
+import { Grid, makeStyles, Modal, Backdrop, Badge, Button } from '@material-ui/core';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
-import { LoginModalSelector, SigninModalSelector, CartItemSelector } from '../Selector/CommonSelector';
+import {
+    LoginModalSelector,
+    SigninModalSelector,
+    CartItemSelector,
+    UserSelector,
+    AuthenStatusSelector
+} from '../Selector/CommonSelector';
 import { ToggleLoginModal, ToggleSigninModal } from '../Action/CommonAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { commonConstances as ACTIONS } from '../Action/ActionConstance';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useNavigate } from 'react-router';
+import { Logout } from '../Action/AuthenticationAction';
 
 const useStyles = makeStyles(theme => ({
     user: {
@@ -49,6 +56,8 @@ const User = () => {
     const carts = useSelector(CartItemSelector)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const login = useSelector(AuthenStatusSelector)
+    const currentUser = useSelector(UserSelector)
 
     return (
         <>
@@ -56,20 +65,25 @@ const User = () => {
                 <PersonOutlineOutlinedIcon className={classes.icon}/>
             </Grid>
             <Grid className={classes.option_container} direction="row" container item xs={7} spacing={0}>
-                <Grid className={classes.user_function} item xs={12} onClick={() => dispatch(ToggleLoginModal({type: ACTIONS.TOGGLE_LOGIN_MODAL, value: true}))}>
-                    <span className={classes.loginLink}>Đăng nhập/Đăng ký</span>
-                </Grid>
+                {!login ? 
+                    <Grid className={classes.user_function} item xs={12} onClick={() => dispatch(ToggleLoginModal({type: ACTIONS.TOGGLE_LOGIN_MODAL, value: true}))}>
+                        <span className={classes.loginLink}>Đăng nhập/Đăng ký</span>
+                    </Grid> : <Grid item xs={12}>
+                        <span>{currentUser.username}</span>
+                    </Grid>
+                }
                 <Grid className={classes.user_function} item xs={12}>
                     <Badge badgeContent={carts.length} color="primary">
                         <ShoppingCartOutlinedIcon className={classes.cart} onClick={() => navigate('/cart')}/>
                     </Badge>
+                    {login && <Button onClick={() => dispatch(Logout())}>Log out</Button>}
                 </Grid>
             </Grid>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={openLogin}
+                open={openLogin && !login}
                 onClose={() => dispatch(ToggleLoginModal({type: ACTIONS.TOGGLE_LOGIN_MODAL, value: false}))}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -83,7 +97,7 @@ const User = () => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={openSignin}
+                open={openSignin && !login}
                 onClose={() => dispatch(ToggleSigninModal({type: ACTIONS.TOGGLE_SIGNIN_MODAL, value: false}))}
                 closeAfterTransition
                 BackdropComponent={Backdrop}

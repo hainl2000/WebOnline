@@ -1,9 +1,6 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import SearchBar from '../Components/SearchBar';
 import User from '../Components/User';
-import { Provider } from 'react-redux';
-import { CommonReducer } from '../Reducer/CommonReducer';
-import { applyMiddleware, compose } from 'redux';
 import ProductTags from './ProductsTag';
 
 const useStyles = makeStyles(theme => ({
@@ -26,8 +23,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 const NavBar = () => {
     const classes = useStyles()
 
@@ -43,15 +38,11 @@ const NavBar = () => {
                             <SearchBar placeholder="Tìm sản phẩm, thương hiệu mong muốn..."/>
                         </Grid>
                         <Grid item container xs={3}>
-                            {/* <Provider store={store}> */}
-                                <User />
-                            {/* </Provider> */}
+                            <User />
                         </Grid>
                     </Grid>
                     <Grid item xs={2} className={classes.tagList}>
-                        {/* <Provider store={store}> */}
-                            <ProductTags />
-                        {/* </Provider> */}
+                        <ProductTags />
                     </Grid>
                 </Grid>
             </Grid>
