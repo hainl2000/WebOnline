@@ -4,7 +4,7 @@ var router = express.Router();
 const productController = require('../controllers/product');
 const categoryController = require('../controllers/category');
 const userController = require('../controllers/user');
-const adminValidation = require('../validate/adminValid');
+// const adminValidation = require('../validate/validateAccount');
 
 // const jwt = require('jsonwebtoken');
 
