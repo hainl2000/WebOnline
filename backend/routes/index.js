@@ -16,9 +16,8 @@ router.use(express.json());
 router.post('/login',indexController.Login);
 router.post('/signup',indexController.Signup);
 router.get('/getListCategories',categoryController.getListCategories);
-router.post('/signout',indexController.Signout);
 router.get('/getAllActiveProducts',productController.getAllActiveProducts);
-router.get('/getListProductsByCategory',productController.getListProductsByCategory);
+router.post('/getListProductsByCategory',productController.getListProductsByCategory);
 
 
 module.exports = router;
