@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import { commonConstances as ACTIONS } from './ActionConstance';
 import Cookies from 'js-cookie'
 
@@ -42,7 +42,15 @@ export function Signin(params)
 export function Authenticate()
 {
     const cookie = Cookies.get('userId')
-    console.log(cookie)
+    if(cookie)
+    {
+        axios.post('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
+            if(response)
+            {
+                console.log(response.data)
+            }
+        })
+    }
     return {
         type: ACTIONS.SET_COOKIE,
         value: cookie
