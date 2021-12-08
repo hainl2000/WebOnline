@@ -44,7 +44,7 @@ export function Authenticate()
     const cookie = Cookies.get('userId')
     if(cookie)
     {
-        axios.post('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
+        axios.get('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
             if(response)
             {
                 console.log(response.data)

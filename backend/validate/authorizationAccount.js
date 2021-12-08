@@ -1,11 +1,13 @@
 const AccountModel = require('../models/user');
 const jwt = require("jsonwebtoken");
+const cookieParser = require('cookie-parser');
 
 const authorizeAdmin = (req,res,next) =>{
     const tokenUserId = req.cookies.userId;
+    console.log(req.cookies);
     if(!tokenUserId){
         console.log("Stop o day ");
-        res.status(403).send({
+        return res.status(403).send({
             message: "Not login"
         })
     }
@@ -27,22 +29,28 @@ const authorizeAdmin = (req,res,next) =>{
             }
         })
     }catch {
-        return res.sendStatus(403);
+        console.log(err);
+        return res.sendStatus(500).json({
+            message: "Error mtfk"
+        });
     }
 }
 
 const authorizeUser = (req,res,next) =>{
     const tokenUserId = req.cookies.userId;
+    // console.log(req);
+    // console.log(req.cookies);
+    console.log(tokenUserId);
     if(!tokenUserId){
         // console.log("Stop o day ");
-            res.status(403).send({
+            return res.status(403).send({
                 message: "Not login"
             })
     }
     try{
         const userId  = jwt.verify(tokenUserId,process.env.JWT_KEY);
-        AccountMode.findOne({
-            _id : userId
+        AccountModel.findOne({
+            _id : userId.userId
         }).then(data =>{
             if(data.role == 1){
                 console.log("Login = user account");
@@ -56,8 +64,11 @@ const authorizeUser = (req,res,next) =>{
                 })
             }
         })
-    }catch {
-        return res.sendStatus(403);
+    }catch(err) {
+        console.log(err);
+        return res.sendStatus(500).json({
+            message: "Error mtfk"
+        });
     }
 };
 
