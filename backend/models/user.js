@@ -6,8 +6,7 @@ const AccountSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
-        match : /^[a-zA-Z\-]+$/
+        match : /^[a-zA-Z ]+$/
     },
     password: {
         type: String,

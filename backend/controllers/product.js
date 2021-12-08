@@ -80,12 +80,12 @@ const updateProduct = (req,res,next) =>{
                    return res.status(500).send(err);
                 else{
                     if(data){
-                        return res.status(201).send({
+                        return res.status(200).send({
                             message : "Update product succesfully"
                         });
                     }
                     else{
-                        return res.stutus(401).send({
+                        return res.stutus(406).send({
                             message : "Not existed product | Error happens while updating"
                         })
                     }
@@ -107,7 +107,9 @@ const deleteProduct = (req,res,next) =>{
         }
     },(err,data)=>{
         if (err) 
-            return res.status(401).json({'error':err});
+            return res.status(401).json({
+                'error':err
+            });
         else{
             if(data){
                 return res.status(200).json({
@@ -115,7 +117,7 @@ const deleteProduct = (req,res,next) =>{
                 });
             }
             else{
-                return res.status(401).json({
+                return res.status(406).json({
                     message : "Not existed product | Error happens while deleting"
                 })
             }
