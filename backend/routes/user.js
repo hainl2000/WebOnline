@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const indexController = require('../controllers/index');
 const userControllers = require('../controllers/user');
 const cartControllers = require('../controllers/cart');
 
@@ -15,6 +16,7 @@ router.post('/cart/update',cartControllers.updateCart);
 router.get('/cart/show',cartControllers.showCart);
 router.post('/cart/checkout',userControllers.checkoutCart);
 router.post('/getData',userControllers.getUserInformation);
+router.post('/signout',indexController.Signout);
 
 
 
