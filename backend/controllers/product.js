@@ -10,7 +10,7 @@ const getAllActiveProducts = (req,res,next) =>{
         deleted : false
     },restrictedFields).then(data =>{
         // console.log(req.cookies.userId);
-        res.json({
+        res.status(200).json({
             'listActiveProducts' : data});
     }).catch(err =>{
         console.log(err);
@@ -31,9 +31,8 @@ const createProduct = (req,res,next) =>{
         // console.log(data);
         if(data){
             console.log('Existed Product');
-            res.json({
-                message : "Existed product",
-                status : 3
+            res.status(409).json({
+                message : "Existed product"
             })
         }
         else{
@@ -46,16 +45,14 @@ const createProduct = (req,res,next) =>{
                 price : price,
                 description : description,
             });
-            res.json({
-                message: "Add Product Succesfully",
-                status : 1
+            res.status(201).json({
+                message: "Add Product Succesfully"
             })
         }
     }).catch(err =>{
         console.log(err);
         console.log('Add product Error');
-        res.json({
-            status : 3,
+        res.status(401).json({
             message : "Add Product Fail"
         })
     })
@@ -83,14 +80,12 @@ const updateProduct = (req,res,next) =>{
                    return res.status(500).send(err);
                 else{
                     if(data){
-                        return res.send({
-                            status : 1,
+                        return res.status(201).send({
                             message : "Update product succesfully"
                         });
                     }
                     else{
-                        return res.send({
-                            status : 0,
+                        return res.stutus(401).send({
                             message : "Not existed product | Error happens while updating"
                         })
                     }
@@ -103,7 +98,7 @@ const updateProduct = (req,res,next) =>{
 };
 
 const deleteProduct = (req,res,next) =>{
-    let productId = req.body.id;
+    // let productId = req.body.id;
     // console.log("Product's id will be deleted is "+productId);
     ProductModel.findOneAndUpdate({_id : req.body.productId},
     {
