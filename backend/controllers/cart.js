@@ -34,7 +34,7 @@ const addToCart = async function(req,res,next) {
         }
     }
     else{
-        res.status(404).json({
+        res.status(406).json({
             message: 'Not existed product'
         })
     }
@@ -59,7 +59,7 @@ const removeFromCart = async function(req,res,next) {
         }
     }
     else{
-        res.status(404).json({
+        res.status(406).json({
             message: 'Not existed product'
         });
     }
@@ -78,15 +78,13 @@ const updateCart = async function(req,res,next) {
             })
         }
         else {
-            res.json({
-                'status': 0,
+            res.status(406).json({
                 'message': 'That product is not existed in cart'
             });
         }
     }
     else{
-        res.json({
-            'status': 2,
+        res.status(401).json({
             'message': 'Not existed product'
         });
     }

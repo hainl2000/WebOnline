@@ -1,5 +1,6 @@
 const AccountModel = require('../models/user');
 const Bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const validateEmail = (email) => {
   return email.match(
@@ -9,13 +10,14 @@ const validateEmail = (email) => {
 
 const validateUsername = (username) =>{
     return username.match(
-        /^[a-zA-Z\-]+$/
+        /^[a-zA-Z ]+$/
     ); 
 };
 
 const Login = (req,res) =>{
     let email = req.body.email;
     let password = req.body.password;
+    let tokenUserId;
     AccountModel.findOne({
         email: email
     }).then(user => {
@@ -24,18 +26,21 @@ const Login = (req,res) =>{
             // console.log(user);
             Bcrypt.compare(password, user.password ,function (err,result) {
                 if(err){
-                    return res.status(404).json({
+                    return res.status(401).json({
                         message: "Auth failed"
                     });
                 }
                 if(result){
-                    return res.status(200).json({
+                    tokenUserId = jwt.sign({
+                        userId: user._id
+                    },process.env.JWT_KEY);
+                    return res.cookie("userId",tokenUserId).status(200).json({
                         message: "Auth Successful",
                         role : user.role
                     })
                 }
                 else{
-                    return res.status(200).json({
+                    return res.status(406).json({
                         message: "PW failed"
                     })
                 }
@@ -43,13 +48,13 @@ const Login = (req,res) =>{
         } 
         else {
             console.log("Not existed user");
-            res.status(404).json({
+            return res.status(406).json({
                 message: "Auth failed",
             });
         }
     }).catch(error => {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             message: "Error",
         });
     })
@@ -59,13 +64,16 @@ const Login = (req,res) =>{
 const Signup = (req,res) =>{
     let username = req.body.username;
     let email = req.body.email;
-    console.log(validateEmail(email) +' ' + validateUsername(username));
+    let tokenUserId;
+    // console.log(validateEmail(email) +' ' + validateUsername(username));
     if(validateEmail(email) && validateUsername(username)){
-        AccountModel.find().or([{ 'username': username }, { 'email': email }])
+        AccountModel.find({
+            email: email
+        })
         .then(user => {
             if (user.length != 0) {
                 console.log('Existed User or Existed Gmail');
-                res.status(409).json({
+                return res.status(409).json({
                     message: "Existed User or Existed Gmail ",
                 });
             } 
@@ -77,20 +85,26 @@ const Signup = (req,res) =>{
                     password: password,
                     email : email,
                     role: 1
+                }).then(user =>{
+                    // console.log(user);
+                    tokenUserId = jwt.sign({
+                        userId: user._id
+                    },process.env.JWT_KEY);
+                    // console.log(tokenUserId);
+                    return res.cookie("userId",tokenUserId).status(201).json({
+                        message : "Signup Succesfully",
+                    })
                 });
-                res.status(201).json({
-                    message : "Signup Succesfully",
-                })
             }
         }).catch(err => {
             // console.log('Error');
-            res.status(500).json({
+            return res.status(500).json({
                 message : "Signup Fail"
             });
         })
     }
     else{
-        res.status(401).json({
+        return res.status(401).json({
             message: "Not valid username or email"
         })
     }
@@ -98,7 +112,9 @@ const Signup = (req,res) =>{
 };
 
 const Signout =(req,res) =>{
-
+    return res.clearCookie("userId").status(200).json({
+        message: "Logout succesfully"
+    })
 };
 
 module.exports = {
