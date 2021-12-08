@@ -7,6 +7,7 @@ import Category from './Page/Category';
 import { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { GetAllProducts, GetAllCategories } from './Action/CommonAction'
+import { Authenticate } from './Action/AuthenticationAction'
 
 const PageRouter = () => {
     const dispatch = useDispatch()
@@ -14,6 +15,7 @@ const PageRouter = () => {
     useEffect(() => {
         dispatch(GetAllProducts())
         dispatch(GetAllCategories())
+        dispatch(Authenticate())
     }, [])
 
     return (

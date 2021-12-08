@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { commonConstances as ACTIONS } from './ActionConstance';
+import Cookies from 'js-cookie'
 
 export function Login(params)
 {
@@ -8,7 +9,7 @@ export function Login(params)
         return axios.post('http://localhost:8000/login', {
                 email: params.username,
                 password: params.password
-        }).then(response => {
+        }, {withCredentials: true}).then(response => {
             if(response.data.message === ACTIONS.AUTHENTICATION_FAILED)
             {
                 dispatch({ type: ACTIONS.LOGIN_SUCCESS, value: false })
@@ -27,7 +28,7 @@ export function Signin(params)
                 email: params.email,
                 username: params.username,
                 password: params.password
-        }).then(response => {
+        }, {withCredentials: true}).then(response => {
             if(response.data.message === ACTIONS.SIGN_UP_SUCCESS)
             {
                 dispatch({ type: ACTIONS.LOGIN_SUCCESS, value: true })
@@ -35,6 +36,16 @@ export function Signin(params)
                 dispatch({ type: ACTIONS.LOGIN_SUCCESS, value: false })
             }
         })
+    }
+}
+
+export function Authenticate()
+{
+    const cookie = Cookies.get('userId')
+    console.log(cookie)
+    return {
+        type: ACTIONS.SET_COOKIE,
+        value: cookie
     }
 }
 

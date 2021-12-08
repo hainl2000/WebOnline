@@ -142,6 +142,17 @@ export const CommonReducer = (state = intialState, action) => {
                 return state.withMutations(s => s.set('product_by_cate', action.value))
             }
 
+        case ACTIONS.SET_COOKIE:
+            {
+                if(action.value)
+                {
+                    console.log('set cookies')
+                    return state.withMutations(s => s.set('user', action.value).set('login', true))
+                }else{
+                    return state
+                }
+            }
+
         default:
             return state
     }
