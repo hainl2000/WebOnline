@@ -4,7 +4,7 @@ const OrderModel = require('../models/order');
 
 
 const addToCart = async function(req,res,next) {
-    const user = await AccountModel.findById(req.body.userId);
+    const user = await AccountModel.findById(req.userId);
     const product = await ProductModel.findById(req.body.productId);
     // console.log(product);
     if (product.deleted == false) {
@@ -41,7 +41,7 @@ const addToCart = async function(req,res,next) {
 };
 
 const removeFromCart = async function(req,res,next) {
-    const user = await AccountModel.findById(req.body.userId);
+    const user = await AccountModel.findById(req.userId);
     const product = await ProductModel.findById(req.body.productId);
     if(product){
         const isExisting = user.cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim());
@@ -66,7 +66,7 @@ const removeFromCart = async function(req,res,next) {
 };
 
 const updateCart = async function(req,res,next) {
-    const user = await AccountModel.findById(req.body.userId);
+    const user = await AccountModel.findById(req.userId);
     const product = await ProductModel.findById(req.body.productId);
     if(product){
         const isExisting = user.cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim());
@@ -97,7 +97,7 @@ const showCart = async function(req,res,next) {
         quantity : false,
         category: false
     }
-    const user = await AccountModel.findById(req.body.userId);
+    const user = await AccountModel.findById(req.userId);
     await Promise.all(user.cart.items.map(async(product)=>{
         try{
             let ProductInfor = await ProductModel.find({
