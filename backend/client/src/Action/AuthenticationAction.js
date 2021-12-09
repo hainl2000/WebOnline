@@ -1,6 +1,7 @@
 import axios, { Axios } from 'axios';
 import { commonConstances as ACTIONS } from './ActionConstance';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import jwt from 'jsonwebtoken'
 
 export function Login(params)
 {
@@ -41,19 +42,20 @@ export function Signin(params)
 
 export function Authenticate()
 {
-    const cookie = Cookies.get('userId')
-    if(cookie)
-    {
-        axios.get('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
-            if(response)
-            {
-                console.log(response.data)
-            }
-        })
-    }
-    return {
-        type: ACTIONS.SET_COOKIE,
-        value: cookie
+    return (dispatch) => {
+        const cookie = Cookies.get('userId')
+        if(cookie)
+        {
+            axios.get('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
+                if(response)
+                {
+                    console.log(response.data)
+                    const token = jwt.verify(response.data.dataUser, process.env.JWT_KEY || 'HAI1012')
+                    console.log(token)
+                    dispatch({ type: ACTIONS.SET_COOKIE, value: { username: token.userInformation.username, email: token.userInformation.password } })
+                }
+            })
+        }
     }
 }
 

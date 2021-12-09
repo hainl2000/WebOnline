@@ -62,6 +62,7 @@ export function SelectProduct({type, value} = {})
 
 export function AddIntoCart(value)
 {
+    axios.post('http://localhost:8000/user/cart/add', {})
     return {
         type: ACTIONS.ADD_CART_ITEM,
         value: value
@@ -104,16 +105,15 @@ export function GetAllCategories()
 
 export function GetProductsByCategory(id)
 {
-    console.log(id)
     return (dispatch) =>
     {
         return axios.post('http://localhost:8000/getListProductsByCategory', {
             category: id
-        }).then(response => {
+        }, { withCredentials: true }).then(response => {
             console.log(response.data)
             dispatch({
                 type: ACTIONS.GET_PRODUCT_BY_CATEGORY,
-                value: response.data.listCategories
+                value: response.data.listProducts
             })
         })
     }
