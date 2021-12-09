@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 const ProductTags = () => {
     const items = useSelector(AllCategorySelector)
-    console.log(items)
 
     return (
         <>

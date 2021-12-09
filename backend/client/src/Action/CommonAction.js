@@ -43,6 +43,14 @@ export function UpdateQuantity({type, value} = {})
 
 export function UpdateCart({type, value} = {})
 {
+    if(value === 1)
+    {
+        axios.post('http://localhost:8000/user/cart/add', {productId: value._id, quantity: 1}, { withCredentials: true }).then(response => {
+            console.log(response)
+        })
+    }else{
+        axios.post('http://localhost:8000/user/cart/discard', {productId: value})
+    }
     const instance = value.cart.find(item => item.id === value.product.id)
     if(instance)
         instance.quantity = value.product.quantity
@@ -62,10 +70,11 @@ export function SelectProduct({type, value} = {})
 
 export function AddIntoCart(value)
 {
-    axios.post('http://localhost:8000/user/cart/add', {})
-    return {
-        type: ACTIONS.ADD_CART_ITEM,
-        value: value
+    return (dispatch) => {
+        axios.post('http://localhost:8000/user/cart/add', {productId: value._id, quantity: 1}, { withCredentials: true }).then(response => {
+            console.log(response)
+            dispatch({type: ACTIONS.ADD_CART_ITEM, value: value})
+        })
     }
 }
 
@@ -110,7 +119,6 @@ export function GetProductsByCategory(id)
         return axios.post('http://localhost:8000/getListProductsByCategory', {
             category: id
         }, { withCredentials: true }).then(response => {
-            console.log(response.data)
             dispatch({
                 type: ACTIONS.GET_PRODUCT_BY_CATEGORY,
                 value: response.data.listProducts
