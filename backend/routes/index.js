@@ -18,6 +18,7 @@ router.post('/signup',indexController.Signup);
 router.get('/getListCategories',categoryController.getListCategories);
 router.get('/getAllActiveProducts',productController.getAllActiveProducts);
 router.post('/getListProductsByCategory',productController.getListProductsByCategory);
+router.post('/getProductData',productController.getProductData);
 
 
 module.exports = router;
