@@ -14,6 +14,7 @@ router.post('/cart/add',cartControllers.addToCart);
 router.post('/cart/remove',cartControllers.removeFromCart);
 router.post('/cart/update',cartControllers.updateCart);
 router.get('/cart/show',cartControllers.showCart);
+router.post('/cart/discard',cartControllers.discardFromCart);
 router.post('/cart/checkout',userControllers.checkoutCart);
 router.get('/getData',userControllers.getUserInformation);
 router.post('/signout',indexController.Signout);

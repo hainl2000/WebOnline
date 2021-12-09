@@ -28,7 +28,7 @@ const addToCart = async function(req,res,next) {
                 user.cart.items.push({ productId: product._id, quantity: req.body.quantity });
             }
             user.save();
-            res.status(200).json({
+            res.status(201).json({
                 message: 'Add To Cart Succesfully'
             })
         }
