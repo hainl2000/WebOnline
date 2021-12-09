@@ -58,11 +58,8 @@ export const CommonReducer = (state = intialState, action) => {
         
         case ACTIONS.SELECT_PRODUCT:
             {
-                console.log(action.value)
                 const p = state.get('products')
-                console.log(p)
                 const selected = p.find(_p => _p._id === action.value)
-                console.log(selected)
                 return state.withMutations(s => s.set('selectedId', selected))
             }
 
@@ -139,7 +136,6 @@ export const CommonReducer = (state = intialState, action) => {
 
         case ACTIONS.GET_PRODUCT_BY_CATEGORY:
             {
-                console.log(action.value)
                 return state.withMutations(s => s.set('product_by_cate', action.value))
             }
 
@@ -147,7 +143,6 @@ export const CommonReducer = (state = intialState, action) => {
             {
                 if(action.value)
                 {
-                    console.log('set cookies')
                     return state.withMutations(s => s.set('user', action.value).set('login', true))
                 }else{
                     return state
