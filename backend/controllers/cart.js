@@ -90,6 +90,43 @@ const updateCart = async function(req,res,next) {
     }
 };
 
+const discardFromCart = async function(req,res,next) {
+    const user = await AccountModel.findById(req.userId);
+    const product = await ProductModel.findById(req.body.productId);
+    // console.log(product);
+    if (product.deleted == false) {
+        if(user.cart.items[isExisting].quantity-parseInt(req.body.quantity) > product.quantity){
+            return res.status(401).json({
+                message: 'Exceed stock quantity'
+            });
+        }   
+        else{
+            const isExisting = user.cart.items.findIndex(objInItems => new String(objInItems.productId).trim() === new String(product._id).trim());
+            if (isExisting >= 0) {
+                if(user.cart.items[isExisting].quantity-parseInt(req.body.quantity) == 0){
+                    user.cart.items.splice(isExisting, 1);
+                    user.save();
+                    return res.status(200).json({
+                        message: 'Remove product from cart'
+                    });
+                }
+                else{
+                    user.cart.items[isExisting].quantity = user.cart.items[isExisting].quantity - parseInt(req.body.quantity);
+                    user.save();
+                    res.status(201).json({
+                        message: 'Minus quantity succesfully'
+                    })
+                }
+            }
+        }
+    }
+    else{
+        res.status(406).json({
+            message: 'Not existed product'
+        })
+    }
+};
+
 const showCart = async function(req,res,next) {
     let listProducts = [];
     let restrictedFields ={
@@ -120,5 +157,6 @@ module.exports = {
     addToCart,
     removeFromCart,
     updateCart,
-    showCart
+    showCart,
+    discardFromCart
 };
