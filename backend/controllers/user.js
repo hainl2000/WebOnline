@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 
 const checkoutCart = async function(req,res,next){
-    let user =  await AccountModel.findById(req.body.userId);
+    let user =  await AccountModel.findById(req.userId);
     // let listProducts = req.body.listProducts;
     let listProducts = user.cart;
     let listBuyProducts = [];
