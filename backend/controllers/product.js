@@ -125,6 +125,22 @@ const deleteProduct = (req,res,next) =>{
     })
 };
 
+
+const getProductData =(req,res) =>{
+    ProductModel.findOne({
+        _id : req.body.productId
+    }).then(data =>{
+        return res.status(200).json({
+            dataProduct : data
+        })
+    }).catch(err =>{
+        console.log(error);
+        return res.status(500).json({
+            message: "Error",
+        });
+    })
+}
+
 const getListProductsByCategory = (req,res) =>{
     let restrictedFields ={
         deleted : false
@@ -150,7 +166,8 @@ module.exports = {
     getListProductsByCategory,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductData
 }
 
 
