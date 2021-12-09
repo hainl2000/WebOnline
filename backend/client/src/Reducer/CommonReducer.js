@@ -139,6 +139,7 @@ export const CommonReducer = (state = intialState, action) => {
 
         case ACTIONS.GET_PRODUCT_BY_CATEGORY:
             {
+                console.log(action.value)
                 return state.withMutations(s => s.set('product_by_cate', action.value))
             }
 
