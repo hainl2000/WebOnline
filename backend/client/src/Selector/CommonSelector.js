@@ -12,10 +12,7 @@ const getProductById = state => {
 }
 const getUser = state => state.user
 const getAllCategories = state => state.category
-const getProductByCate = state => {
-    console.log(state.product_by_cate)
-    return state.product_by_cate
-}
+const getProductByCate = state => state.product_by_cate
 const getAuthenStatus = state => state.login
 
 export const LoginModalSelector = createSelector(

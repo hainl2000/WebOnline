@@ -49,9 +49,7 @@ export function Authenticate()
             axios.get('http://localhost:8000/user/getData', { withCredentials: true }).then(response => {
                 if(response)
                 {
-                    console.log(response.data)
                     const token = jwt.verify(response.data.dataUser, process.env.JWT_KEY || 'HAI1012')
-                    console.log(token)
                     dispatch({ type: ACTIONS.SET_COOKIE, value: { username: token.userInformation.username, email: token.userInformation.password } })
                 }
             })

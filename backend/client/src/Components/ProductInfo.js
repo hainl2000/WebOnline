@@ -91,7 +91,6 @@ const ProductInfo = ({ id }) => {
                     <Container className={classes.btn_group}>
                         <Button className={classes.btn} color="primary" variant="contained" onClick={() => {
                             dispatch(AddIntoCart(product))
-                            console.log(cart)
                         }}>Thêm vào giỏ hàng</Button>
                         <Button className={classes.btn} color="secondary" variant="contained">Đặt hàng nhanh</Button>
                     </Container>
