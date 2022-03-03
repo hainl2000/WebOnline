@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { GetAllProducts, GetAllCategories } from './Action/CommonAction'
 import { Authenticate } from './Action/AuthenticationAction'
+import Admin from './Page/Admin';
 
 const PageRouter = () => {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const PageRouter = () => {
                 <Route path="/product/:id" exact element={<ProductById />} />
                 <Route path="/cart" exact element={<Cart />} />
                 <Route path="/category/:id" exact element={<Category />} />
+                <Route path="/admin" exact element={<Admin />} />
             </Routes>
         </Router>
     )

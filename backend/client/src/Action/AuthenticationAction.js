@@ -50,7 +50,7 @@ export function Authenticate()
                 if(response)
                 {
                     const token = jwt.verify(response.data.dataUser, process.env.JWT_KEY || 'HAI1012')
-                    dispatch({ type: ACTIONS.SET_COOKIE, value: { username: token.userInformation.username, email: token.userInformation.password } })
+                    dispatch({ type: ACTIONS.SET_COOKIE, value: { username: token.userInformation } })
                 }
             })
         }

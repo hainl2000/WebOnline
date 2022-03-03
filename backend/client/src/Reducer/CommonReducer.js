@@ -55,19 +55,16 @@ export const CommonReducer = (state = intialState, action) => {
             {
                 return state.withMutations(s => s.set('selectProduct', {id: null, name: null, quantity: null, descript: null, price: null}).set('cart', action.value))
             }
-        
-        case ACTIONS.SELECT_PRODUCT:
+
+        case ACTIONS.RETRIEVE_ITEM:
             {
-                const p = state.get('products')
-                const selected = p.find(_p => _p._id === action.value)
-                return state.withMutations(s => s.set('selectedId', selected))
+                return state.withMutations(s => s.set('selectedId', action.value))
             }
 
         case ACTIONS.ADD_CART_ITEM:
             {
                 const p = state.get('cart')
-                console.log(p, action.value)
-                const _p = p.find(_p_ => _p_._id === action.value.id)
+                const _p = p.find(_p_ => _p_._id === action.value._id)
                 if(_p)
                 {
                     _p.quantity += 1
@@ -147,6 +144,16 @@ export const CommonReducer = (state = intialState, action) => {
                 }else{
                     return state
                 }
+            }
+
+        case ACTIONS.CONFIRM_ORDER:
+            {
+                return state.withMutations(s => s.set('cart', []))
+            }
+
+        case ACTIONS.GET_CART_ITEMS:
+            {
+                return state.withMutations(s => s.set('cart', action.value))
             }
 
         default:

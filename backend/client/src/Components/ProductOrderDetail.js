@@ -74,7 +74,7 @@ const ProductOrderDetail = ({c_item}) => {
                                 <p className={classes.detail}>Đơn giá: {Intl.NumberFormat().format(c_item?.price)}$</p>
                             </Grid>
                             <Grid className={classes.quantity} item xs={6}>
-                                <p>Số lượng:</p>{<AddBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: 1}))}/>}<p>{quantity}</p>{<IndeterminateCheckBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: -1}))} />}
+                                <p>Số lượng:</p>{<AddBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: 1, item: c_item}))}/>}<p>{quantity}</p>{<IndeterminateCheckBoxIcon onClick={() => dispatch(UpdateQuantity({type: ACTIONS.UPDATE_ITEM_QUANTITY, value: -1, item: c_item}))} />}
                             </Grid>
                             <Grid item xs={6}>
                                 <p className={classes.total}>{Intl.NumberFormat().format(c_item?.price * c_item?.quantity)}$</p>

@@ -18,5 +18,8 @@ export const commonConstances = {
     AUTHENTICATION_FAILED: "Auth failed",
     SIGN_UP_BEGIN: "SIGN_UP_BEGIN",
     SIGN_UP_SUCCESS: "Signup Succesfully",
-    SET_COOKIE: "SET_COOKIE"
+    SET_COOKIE: "SET_COOKIE",
+    RETRIEVE_ITEM: "RETRIEVE_ITEM",
+    CONFIRM_ORDER: "CONFIRM_ORDER",
+    GET_CART_ITEMS: "GET_CART_ITEMS"
 }

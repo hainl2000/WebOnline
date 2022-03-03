@@ -3,9 +3,10 @@ import CartItem from "./CartItem";
 import { CartItemModal, PaymentMethodSelector, CartItemSelector } from '../Selector/CommonSelector';
 import { useSelector, useDispatch } from "react-redux";
 import { commonConstances as ACTIONS } from "../Action/ActionConstance";
-import { ChoosePaymentMethod, UpdateCart } from "../Action/CommonAction";
+import { ChoosePaymentMethod, UpdateCart, ConfirmOrder } from "../Action/CommonAction";
 import ProductOrderDetail from "./ProductOrderDetail";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { useEffect } from "react";
 
 const paymentMethod = [
     {
@@ -98,6 +99,10 @@ const CartContainer = () => {
     const dispatch = useDispatch()
     const selectProduct = useSelector(CartItemModal)
     const items = useSelector(CartItemSelector)
+
+    useEffect(() => {
+        
+    })
     
     return (
         <Container className={classes.container} maxWidth="lg">
@@ -125,7 +130,7 @@ const CartContainer = () => {
                         <h3>Phương thức thanh toán</h3>
                         {paymentMethod.map(method => <PaymentMethod key={method.id} method={method} value={items.reduce((previousValue, curentValue) => curentValue.quantity * curentValue.price + previousValue, 30000)}/>)}
                         <Container className={classes.buttons}>
-                            <Button className={classes.btn} variant="contained" color="secondary">Confirm</Button>
+                            <Button className={classes.btn} variant="contained" color="secondary" onClick={() => dispatch(ConfirmOrder())}>Confirm</Button>
                         </Container>
                     </Paper>
                 </Grid>

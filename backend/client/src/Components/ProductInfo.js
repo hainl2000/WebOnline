@@ -6,7 +6,9 @@ import { commonConstances as ACTIONS } from '../Action/ActionConstance';
 import { useDispatch } from 'react-redux';
 import { makeStyles, TextField, FormControl } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
-import { AddIntoCart } from "../Action/CommonAction";
+import { AddIntoCart, GetProductById } from "../Action/CommonAction";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -55,10 +57,14 @@ const useStyles = makeStyles(theme => ({
 
 const ProductInfo = ({ id }) => {
     const dispatch = useDispatch()
-    dispatch(SelectProduct({type: ACTIONS.SELECT_PRODUCT, value: id}))
     const product = useSelector(ProductByIdSelector)
     const cart = useSelector(CartItemSelector)
     const classes = useStyles()
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        dispatch(GetProductById(id))
+    }, [])
 
     return (
         <Paper className={classes.container}>
@@ -92,7 +98,15 @@ const ProductInfo = ({ id }) => {
                         <Button className={classes.btn} color="primary" variant="contained" onClick={() => {
                             dispatch(AddIntoCart(product))
                         }}>Thêm vào giỏ hàng</Button>
-                        <Button className={classes.btn} color="secondary" variant="contained">Đặt hàng nhanh</Button>
+                        <Button
+                            className={classes.btn}
+                            color="secondary"
+                            variant="contained"
+                            onClick={() => {
+                                dispatch(AddIntoCart(product))
+                                navigate('/cart')
+                            }}
+                        >Đặt hàng nhanh</Button>
                     </Container>
                 </Grid>
             </Grid>
